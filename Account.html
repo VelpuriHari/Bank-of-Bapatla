@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Craete Account</title>
+  </head>
+  <body>
+    <form id="formid" onsubmit="submitform()">
+      <table
+        style="
+          padding: 30px;
+          border: solid;
+          margin: auto;
+          padding: 30px;
+          border-radius: 10px;
+          background-color: rgb(181, 225, 151);
+        "
+      >
+        <marquee direction="right" scrollamount="20">Bank of Bapatla</marquee>
+        <tr>
+          <caption>
+            <h1 style="text-align: center">CREATE ACCOUNT</h1>
+          </caption>
+        </tr>
+        <tr>
+          <td>First Name:</td>
+          <td><input type="text" id="1" name="fname" value="" /></td>
+        </tr>
+        <tr>
+          <td>Middle Name:</td>
+          <td><input type="text" id="2" name="mname" value="" /></td>
+        </tr>
+        <tr>
+          <td>Last Name:</td>
+          <td><input type="text" id="3" name="lname" value="" /></td>
+        </tr>
+        <tr>
+          <td>Date of Birth:</td>
+          <td><input type="date" id="3" name="date" value="" /></td>
+        </tr>
+        <tr>
+          <td>Father/Husband Name:</td>
+          <td><input type="text" id="4" name="hname" value="" /></td>
+        </tr>
+        <tr>
+          <td>Mobile Number:</td>
+          <td>
+            <input type="tel" id="5" maxlength="10" name="Phno" value="" />
+          </td>
+        </tr>
+        <tr>
+          <td>Gender:</td>
+          <td>
+            <input type="radio" id="6" value="m" name="gender" />Male<input
+              type="radio"
+              value="f"
+              name="gender"
+            />Female
+          </td>
+        </tr>
+        <tr>
+          <td>E-mail:</td>
+          <td>
+            <input
+              type="email"
+              id="7"
+              placeholder="example@gmail.com"
+              name="email"
+              value=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Adhar Card No:</td>
+          <td><input type="number" id="8" name="adhar" value="" /></td>
+        </tr>
+        <tr>
+          <td>PAN Card No:</td>
+          <td><input type="number" id="9" name="PAN" value="" /></td>
+        </tr>
+        <tr>
+          <td>Age:</td>
+          <td><input type="number" id="10" name="age" value="" /></td>
+        </tr>
+
+        <tr>
+          <td>Upload Your Photo:</td>
+          <td><input type="file" id="11" name="photo" value="" /></td>
+        </tr>
+        <tr>
+          <td>Income:</td>
+          <td>
+            <input
+              type="number"
+              id="12"
+              placeholder="10,000"
+              name="income"
+              value=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Upload Income Certificate:</td>
+          <td><input type="file" id="13" name="incert" value="" /></td>
+        </tr>
+        <tr>
+          <td>Address:</td>
+          <td>
+            <textarea
+              rows="4"
+              id="14"
+              cols="20"
+              placeholder="Dno,street,town,mandal,dist,State"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Pincode:</td>
+          <td><input type="number" id="15" name="pincode" value="" /></td>
+        </tr>
+        <tr>
+          <td>Upload Photo of signature:</td>
+          <td><input type="file" id="16" name="sign" value="" /></td>
+        </tr>
+        <tr style="text-align: center">
+          <td>
+            <input id="sub" type="submit" onclick=" account_create()" />
+          </td>
+          <td><input id="ret" type="RESET" /></td>
+        </tr>
+      </table>
+    </form>
+    <h1 id="account_num">hugyduy</h1>
+  </body>
+  <script src="account.js"></script>
+</html>
