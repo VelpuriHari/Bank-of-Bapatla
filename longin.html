@@ -14,7 +14,7 @@
         border-radius: 20px;
       "
     >
-      <h1>Log in</h1>
+      <h1 id="head">Log in</h1>
       <hr />
       <div
         style="
@@ -27,28 +27,88 @@
       >
         <marquee direction="right">Bank of bapatla</marquee>
       </div>
-      <form>
+      <div>
         <table style="margin: auto; text-align: left">
           <tr>
             <td>
               <label><h2>User ID :</h2> </label>
             </td>
-            <td><input type="email" style="height: 20px; width: 200px" /></td>
+            <td>
+              <input
+                id="email"
+                type="text"
+                style="height: 20px; width: 200px"
+              />
+            </td>
           </tr>
           <tr>
             <td>
               <label><h2>Password :</h2> </label>
             </td>
             <td>
-              <input type="password" style="height: 20px; width: 200px" />
+              <input
+                id="password"
+                type="password"
+                style="height: 20px; width: 200px"
+              />
             </td>
           </tr>
           <tr style="text-align: center">
-            <td><input type="submit" /></td>
-            <td><input type="reset" /></td>
+            <td>
+              <button onclick="location.href='singup.html'" >Sign Up</button>
+            </td>
+            <td>
+              <button id="loginForm" >Login</button>
+            </td>
           </tr>
         </table>
-      </form>
+      </div>
     </div>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        set,
+        onValue,
+      } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-database.js";
+  
+      const firebaseConfig = {
+        apiKey: "AIzaSyDaassIFq9p0Ypc0FDN9uKhj6fHALYygTU",
+        authDomain: "bankofbapatla.firebaseapp.com",
+        projectId: "bankofbapatla",
+        storageBucket: "bankofbapatla.appspot.com",
+        messagingSenderId: "101833800062",
+        appId: "1:101833800062:web:7d631e50c24084b8655b2f",
+        measurementId: "G-M1Z848VMYT",
+        databaseURL:
+          "https://bankofbapatla-default-rtdb.asia-southeast1.firebasedatabase.app",
+      };
+      (function () {
+        function getText() {
+  
+          var email = document.querySelector("#email").value;
+          var password = document.querySelector("#password").value;
+          const db = getDatabase();
+          set(ref(db, "users/" + email), {
+            email: email,
+            password: password,
+          });
+        }
+  
+        document
+          .getElementById("loginForm")
+          .addEventListener("click", getText, true);
+      })();
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase();
+      /*
+      const starCountRef = ref(db, "users/" + "banklogin@gmailcom");
+      onValue(starCountRef, (snapshot) => {
+        const data = snapshot.val();
+        console.log(data);
+      });
+      */
+    </script>
   </body>
 </html>
