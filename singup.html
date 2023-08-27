@@ -3,14 +3,14 @@
   <head>
     <title>SingUp</title>
     <style>
-     .input{
+      .input {
         width: 300px;
         height: 30px;
         border-top: 10px;
         border-left: 10px;
         border-right: 10px;
         padding: 15px;
-    }
+      }
     </style>
   </head>
   <body>
@@ -42,13 +42,13 @@
         <table style="margin: auto; text-align: left">
           <tr>
             <td>
-                <h6 id="err" style="color: red"></h6>
+              <h6 id="err" style="color: red"></h6>
             </td>
-            </tr>
-            <tr>
+          </tr>
+          <tr>
             <td>
               <input
-              class="input"
+                class="input"
                 id="userid"
                 type="text"
                 placeholder="Create your user id"
@@ -56,32 +56,29 @@
             </td>
           </tr>
           <tr>
-             
-                <td>
-                    <input
-                    class="input"
-                    id="email"
-                    type="email"
-                    placeholder="example@gmail.com"
-                   
-                    />
-                </td>
-            </tr>
-            <tr>
-           
-              <td>
-                <input
-                class="input"
-                  id="password"
-                  type="password"
-                  placeholder="create password"
-                  />
-              </td>
-          </tr>
-     
             <td>
               <input
-              class="input"
+                class="input"
+                id="email"
+                type="email"
+                placeholder="example@gmail.com"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                class="input"
+                id="password"
+                type="password"
+                placeholder="create password"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                class="input"
                 id="repassword"
                 type="password"
                 placeholder="re type password"
@@ -97,7 +94,6 @@
       </div>
     </div>
     <script type="module">
-        
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
       import {
         getDatabase,
@@ -105,7 +101,7 @@
         set,
         onValue,
       } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-database.js";
-      
+
       const firebaseConfig = {
         apiKey: "AIzaSyDaassIFq9p0Ypc0FDN9uKhj6fHALYygTU",
         authDomain: "bankofbapatla.firebaseapp.com",
@@ -117,43 +113,34 @@
         databaseURL:
           "https://bankofbapatla-default-rtdb.asia-southeast1.firebasedatabase.app",
       };
-     
 
-          (function () {
-            function getText() {
-                alert("jdc")
-              var userid = document.querySelector("#userid").value;
-              var email = document.querySelector("#email").value;
-              var password = document.querySelector("#password").value;
-              var repassword = document.querySelector("#repassword").value;
-              if(password==repassword){
-    
-                  const db = getDatabase();
-                  set(ref(db, "users/" + userid), {
-                    email: email,
-                    password: password,
-                  });
-              }
-              else{
-document.getElementById("err").innerHTML=`The password re entered is not same`
-            }
-            }
-    
-            document
-              .getElementById("loginForm")
-              .addEventListener("click", getText, true);
-          })();
-          const app = initializeApp(firebaseConfig);
-          const db = getDatabase();
-      
-   
-      /*
-      const starCountRef = ref(db, "users/" + "banklogin@gmailcom");
-      onValue(starCountRef, (snapshot) => {
-        const data = snapshot.val();
-        console.log(data);
-      });
-      */
+      (function () {
+        function getText() {
+          alert("jdc");
+          var userid = document.querySelector("#userid").value;
+          var email = document.querySelector("#email").value;
+          var password = document.querySelector("#password").value;
+          var repassword = document.querySelector("#repassword").value;
+          if (password == repassword) {
+            const db = getDatabase();
+            set(ref(db, "users/" + userid), {
+              email: email,
+              password: password,
+            });
+            document.getElementById("err").innerHTML = `Succussefully Sing Up`;
+          } else {
+            document.getElementById(
+              "err"
+            ).innerHTML = `The password re entered is not same`;
+          }
+        }
+
+        document
+          .getElementById("loginForm")
+          .addEventListener("click", getText, true);
+      })();
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase();
     </script>
   </body>
 </html>

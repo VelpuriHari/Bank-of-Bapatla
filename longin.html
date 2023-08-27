@@ -2,6 +2,16 @@
 <html lang="en">
   <head>
     <title>longin</title>
+    <style>
+      .input {
+        width: 300px;
+        height: 30px;
+        border-top: 10px;
+        border-left: 10px;
+        border-right: 10px;
+        padding: 15px;
+      }
+    </style>
   </head>
   <body>
     <div
@@ -31,34 +41,34 @@
         <table style="margin: auto; text-align: left">
           <tr>
             <td>
-              <label><h2>User ID :</h2> </label>
-            </td>
-            <td>
-              <input
-                id="email"
-                type="text"
-                style="height: 20px; width: 200px"
-              />
+              <h6 id="err" style="color: red"></h6>
             </td>
           </tr>
           <tr>
             <td>
-              <label><h2>Password :</h2> </label>
-            </td>
-            <td>
               <input
-                id="password"
-                type="password"
-                style="height: 20px; width: 200px"
+                class="input"
+                id="userid"
+                type="text"
+                placeholder="Enter user id"
               />
             </td>
           </tr>
+
+          <tr>
+            <td>
+              <input
+                class="input"
+                id="password"
+                type="password"
+                placeholder="Enter password"
+              />
+            </td>
+          </tr>
+
           <tr style="text-align: center">
             <td>
-              <button onclick="location.href='singup.html'" >Sign Up</button>
-            </td>
-            <td>
-              <button id="loginForm" >Login</button>
+              <button id="loginForm">Login</button>
             </td>
           </tr>
         </table>
@@ -72,7 +82,7 @@
         set,
         onValue,
       } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-database.js";
-  
+
       const firebaseConfig = {
         apiKey: "AIzaSyDaassIFq9p0Ypc0FDN9uKhj6fHALYygTU",
         authDomain: "bankofbapatla.firebaseapp.com",
@@ -86,29 +96,28 @@
       };
       (function () {
         function getText() {
-  
-          var email = document.querySelector("#email").value;
-          var password = document.querySelector("#password").value;
-          const db = getDatabase();
-          set(ref(db, "users/" + email), {
-            email: email,
-            password: password,
+          var userid = document.getElementById("userid").value;
+          const starCountRef = ref(db, "users/" + userid);
+          onValue(starCountRef, (snapshot) => {
+            const data = snapshot.val();
+            alert("data");
+            var password = document.getElementById("password").value;
+            if (password == data) {
+              window.open("index..html");
+            } else {
+              document.getElementById(
+                "err"
+              ).innerHTML = `Password entered is worng`;
+            }
           });
         }
-  
+
         document
           .getElementById("loginForm")
           .addEventListener("click", getText, true);
       })();
       const app = initializeApp(firebaseConfig);
       const db = getDatabase();
-      /*
-      const starCountRef = ref(db, "users/" + "banklogin@gmailcom");
-      onValue(starCountRef, (snapshot) => {
-        const data = snapshot.val();
-        console.log(data);
-      });
-      */
     </script>
   </body>
 </html>

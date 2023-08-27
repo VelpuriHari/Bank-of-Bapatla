@@ -4,7 +4,38 @@
     <title>Document</title>
   </head>
   <body onload="acc()">
-    <h1 id="account_num"></h1>
+    <div class="cont">
+      <h2>Get Verification code to the email</h2>
+      <div id="mail"></div>
+      <div id="pin">
+        <input id="code" type="number" maxlength="6" />
+      </div>
+      <button onclick="sendEmail()">GET CODE</button>
+      <button onclick="verify()">SUBMIT</button>
+    </div>
+    <div>
+      Your Account Number :
+      <div id="acc_num"></div>
+    </div>
   </body>
   <script src="account.js"></script>
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
+
+  <script type="text/javascript">
+    function sendEmail() {
+      var pin = Math.round(Math.random() * (10000000 - 1000000 + 1)) + 1000000;
+      localStorage.setItem("pin", pin);
+      Email.send({
+        Host: "smtp.gmail.com",
+        Username: "bankofbapatla@gmail.com",
+        Password: "bec@bapatla",
+        To: localStorage.getItem("email"),
+        From: "bankofbapatla@gmail.com",
+        Subject: "Verification code",
+        Body: `${pin}`,
+      }).then(function (message) {
+        alert("mail sent successfully");
+      });
+    }
+  </script>
 </html>

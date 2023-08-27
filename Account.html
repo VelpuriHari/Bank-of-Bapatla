@@ -117,4 +117,54 @@
     </div>
   </body>
   <script src="account.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
+    import {
+      getDatabase,
+      ref,
+      set,
+      onValue,
+    } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDaassIFq9p0Ypc0FDN9uKhj6fHALYygTU",
+      authDomain: "bankofbapatla.firebaseapp.com",
+      projectId: "bankofbapatla",
+      storageBucket: "bankofbapatla.appspot.com",
+      messagingSenderId: "101833800062",
+      appId: "1:101833800062:web:7d631e50c24084b8655b2f",
+      measurementId: "G-M1Z848VMYT",
+      databaseURL:
+        "https://bankofbapatla-default-rtdb.asia-southeast1.firebasedatabase.app",
+    };
+
+    (function () {
+      function getText() {
+        alert("jdc");
+        document.getElementById("sub").disabled = true;
+        window.open("accountNum.html", "blank");
+        var acc_num =
+          Math.round(Math.random() * (100000000000 - 10000000000 + 1)) +
+          10000000000;
+        localStorage.setItem("accnum", acc_num);
+        var email = document.querySelector("#7").value;
+        localStorage.setItem("email", email);
+
+        var name = document.querySelector("#2").value;
+        var Phno = document.querySelector("#5").value;
+        var address = document.querySelector("#14").value;
+        const db = getDatabase();
+        set(ref(db, "users/" + acc_num), {
+          name: name,
+          Phno: Phno,
+          address: address,
+        });
+        window.close("Account.html");
+      }
+
+      document.getElementById("sub").addEventListener("click", getText, true);
+    })();
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase();
+  </script>
 </html>
