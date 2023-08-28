@@ -23,28 +23,28 @@
         </tr>
         <tr>
           <td>First Name:</td>
-          <td><input type="text" id="1" name="fname" value="" /></td>
+          <td><input type="text" id="1" name="fname" /></td>
         </tr>
         <tr>
           <td>Middle Name:</td>
-          <td><input type="text" id="2" name="mname" value="" /></td>
+          <td><input type="text" id="2" name="mname" required /></td>
         </tr>
         <tr>
           <td>Last Name:</td>
-          <td><input type="text" id="3" name="lname" value="" /></td>
+          <td><input type="text" id="3" name="lname" /></td>
         </tr>
         <tr>
           <td>Date of Birth:</td>
-          <td><input type="date" id="3" name="date" value="" /></td>
+          <td><input type="date" id="3" name="date" /></td>
         </tr>
         <tr>
           <td>Father/Husband Name:</td>
-          <td><input type="text" id="4" name="hname" value="" /></td>
+          <td><input type="text" id="4" name="hname" /></td>
         </tr>
         <tr>
           <td>Mobile Number:</td>
           <td>
-            <input type="tel" id="5" maxlength="10" name="Phno" value="" />
+            <input type="tel" id="5" maxlength="10" name="Phno" required />
           </td>
         </tr>
         <tr>
@@ -65,31 +65,31 @@
               id="7"
               placeholder="example@gmail.com"
               name="email"
-              value=""
+              required
             />
           </td>
         </tr>
         <tr>
           <td>Adhar Card No:</td>
-          <td><input type="number" id="8" name="adhar" value="" /></td>
+          <td><input type="number" id="8" name="adhar" /></td>
         </tr>
         <tr>
           <td>PAN Card No:</td>
-          <td><input type="number" id="9" name="PAN" value="" /></td>
+          <td><input type="number" id="9" name="PAN" /></td>
         </tr>
         <tr>
           <td>Age:</td>
-          <td><input type="number" id="10" name="age" value="" /></td>
+          <td><input type="number" id="10" name="age" /></td>
         </tr>
 
         <tr>
           <td>Upload Your Photo:</td>
-          <td><input type="file" id="11" name="photo" value="" /></td>
+          <td><input type="file" id="11" name="photo" /></td>
         </tr>
 
         <tr>
           <td>Upload Income Certificate:</td>
-          <td><input type="file" id="13" name="incert" value="" /></td>
+          <td><input type="file" id="13" name="incert" /></td>
         </tr>
         <tr>
           <td>Address:</td>
@@ -99,24 +99,24 @@
               id="14"
               cols="20"
               placeholder="Dno,street,town,mandal,dist,State"
+              required
             ></textarea>
           </td>
         </tr>
         <tr>
           <td>Pincode:</td>
-          <td><input type="number" id="15" name="pincode" value="" /></td>
+          <td><input type="number" id="15" name="pincode" /></td>
         </tr>
 
         <tr style="text-align: center">
           <td>
-            <button id="sub" onclick=" account_create()">SUBMIT</button>
+            <button id="sub">SUBMIT</button>
           </td>
           <td><input id="ret" type="RESET" /></td>
         </tr>
       </table>
     </div>
   </body>
-  <script src="account.js"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
     import {
@@ -140,26 +140,25 @@
 
     (function () {
       function getText() {
-        alert("jdc");
         document.getElementById("sub").disabled = true;
-        window.open("accountNum.html", "blank");
         var acc_num =
           Math.round(Math.random() * (100000000000 - 10000000000 + 1)) +
           10000000000;
         localStorage.setItem("accnum", acc_num);
-        var email = document.querySelector("#7").value;
+        var email = document.getElementById("7").value;
         localStorage.setItem("email", email);
 
-        var name = document.querySelector("#2").value;
-        var Phno = document.querySelector("#5").value;
-        var address = document.querySelector("#14").value;
+        var name = document.getElementById("2").value;
+        var Phno = document.getElementById("5").value;
+        var address = document.getElementById("14").value;
         const db = getDatabase();
-        set(ref(db, "users/" + acc_num), {
+        set(ref(db, "Accounts/" + acc_num), {
           name: name,
           Phno: Phno,
           address: address,
+        }).then(() => {
+          window.open("accountNum.html");
         });
-        window.close("Account.html");
       }
 
       document.getElementById("sub").addEventListener("click", getText, true);

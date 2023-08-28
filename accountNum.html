@@ -11,11 +11,17 @@
         <input id="code" type="number" maxlength="6" />
       </div>
       <button onclick="sendEmail()">GET CODE</button>
-      <button onclick="verify()">SUBMIT</button>
-    </div>
-    <div>
-      Your Account Number :
-      <div id="acc_num"></div>
+      <button onclick="acc_num()">VERIFY</button>
+      <div>
+        Your Account Number :
+        <div id="acc_num"></div>
+      </div>
+      <div>
+        Enetr Pin Code:MaxLen is 4
+
+        <input id="code2" type="number" maxlength="4" />
+      </div>
+      <button id="verify">SUBMIT</button>
     </div>
   </body>
   <script src="account.js"></script>
@@ -34,8 +40,47 @@
         Subject: "Verification code",
         Body: `${pin}`,
       }).then(function (message) {
-        alert("mail sent successfully");
+        alert(pin);
       });
     }
+  </script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
+    import {
+      getDatabase,
+      ref,
+      set,
+      update,
+      onValue,
+    } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDaassIFq9p0Ypc0FDN9uKhj6fHALYygTU",
+      authDomain: "bankofbapatla.firebaseapp.com",
+      projectId: "bankofbapatla",
+      storageBucket: "bankofbapatla.appspot.com",
+      messagingSenderId: "101833800062",
+      appId: "1:101833800062:web:7d631e50c24084b8655b2f",
+      measurementId: "G-M1Z848VMYT",
+      databaseURL:
+        "https://bankofbapatla-default-rtdb.asia-southeast1.firebasedatabase.app",
+    };
+
+    (function () {
+      function getText() {
+        const db = getDatabase();
+        var code = document.getElementById("code2").value;
+        update(ref(db, "Accounts/" + `${localStorage.getItem("accnum")}/`), {
+          pin: code,
+          Balance: 0,
+        });
+      }
+
+      document
+        .getElementById("verify")
+        .addEventListener("click", getText, true);
+    })();
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase();
   </script>
 </html>

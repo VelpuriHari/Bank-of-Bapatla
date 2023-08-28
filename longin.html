@@ -100,9 +100,9 @@
           const starCountRef = ref(db, "users/" + userid);
           onValue(starCountRef, (snapshot) => {
             const data = snapshot.val();
-            alert("data");
+            var data1 = data.password;
             var password = document.getElementById("password").value;
-            if (password == data) {
+            if (password == data1) {
               window.open("index..html");
             } else {
               document.getElementById(

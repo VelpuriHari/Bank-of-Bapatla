@@ -5,11 +5,75 @@
   </head>
   <body>
     <div>
-      <div>Amount:<br /><input type="number" /></div>
+      <div>Amount:<br /><input id="amo" type="number" /></div>
       <div>
-        Enter your pincode:<input type="number" />
-        <button>PAY</button>
+        Enter your pincode:<input id="pin" type="number" />
+        <button id="loginForm">PAY</button>
       </div>
     </div>
   </body>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
+    import {
+      getDatabase,
+      ref,
+      set,
+      onValue,
+    } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDaassIFq9p0Ypc0FDN9uKhj6fHALYygTU",
+      authDomain: "bankofbapatla.firebaseapp.com",
+      projectId: "bankofbapatla",
+      storageBucket: "bankofbapatla.appspot.com",
+      messagingSenderId: "101833800062",
+      appId: "1:101833800062:web:7d631e50c24084b8655b2f",
+      measurementId: "G-M1Z848VMYT",
+      databaseURL:
+        "https://bankofbapatla-default-rtdb.asia-southeast1.firebasedatabase.app",
+    };
+    (function () {
+      function getText() {
+        var ammount = document.getElementById("amo").value;
+        var pin = document.getElementById("pin").value;
+        var acc_from = localStorage.getItem("from");
+        var acc_to = localStorage.getItem("to");
+        const starCountRef = ref(db, "users/" + acc_from);
+        onValue(starCountRef, (snapshot) => {
+          const data = snapshot.val();
+          var code = data.pin;
+          var balance = data.balance;
+          ////////////////////////////////
+          if (pin == code) {
+            if (balance >= ammount) {
+              const db = getDatabase();
+              const date = new Date();
+              const d = date.toISOString().slice(0, -5);
+              set(ref(db, "Transactions/" + `${acc_to}` + d), {
+                D: ammount,
+              }).then(() => {
+                const date = new Date();
+                const d = date.toISOString().slice(0, -5);
+                set(ref(db, "Transactions/" + `${acc_from}/` + d), {
+                  W: ammount,
+                });
+              });
+            } else {
+              document.getElementById("err").innerHTML = `Insufficient Balance`;
+            }
+          } else {
+            document.getElementById(
+              "err"
+            ).innerHTML = `Password entered is worng`;
+          }
+        });
+      }
+
+      document
+        .getElementById("loginForm")
+        .addEventListener("click", getText, true);
+    })();
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase();
+  </script>
 </html>

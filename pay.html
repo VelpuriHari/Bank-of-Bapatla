@@ -5,12 +5,67 @@
   </head>
   <body>
     <div>
-      <div>From:<input type="number" /> To:<input type="number" /></div>
       <div>
+        From:<input id="from" type="number" /> To:<input
+          id="to"
+          type="number"
+        />
+      </div>
+      <div>
+        User ID:<input id="userid" type="text" />
         Enter your login Password:
-        <input type="number" />
-        <button onclick="location.href='pay2.html'">NEXT</button>
+        <input id="Password" type="number" />
+        <button id="loginform">NEXT</button>
       </div>
     </div>
   </body>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
+    import {
+      getDatabase,
+      ref,
+      set,
+      onValue,
+    } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDaassIFq9p0Ypc0FDN9uKhj6fHALYygTU",
+      authDomain: "bankofbapatla.firebaseapp.com",
+      projectId: "bankofbapatla",
+      storageBucket: "bankofbapatla.appspot.com",
+      messagingSenderId: "101833800062",
+      appId: "1:101833800062:web:7d631e50c24084b8655b2f",
+      measurementId: "G-M1Z848VMYT",
+      databaseURL:
+        "https://bankofbapatla-default-rtdb.asia-southeast1.firebasedatabase.app",
+    };
+    (function () {
+      function getText() {
+        var userid = document.getElementById("userid").value;
+        const starCountRef = ref(db, "users/" + userid);
+        onValue(starCountRef, (snapshot) => {
+          var data = snapshot.val();
+          var data = data.password;
+          var password = document.getElementById("password").value;
+          if (password == data) {
+            var from = document.getElementById("from").value;
+            var to = document.getElementById("to").value;
+            localStorage.setItem("from", from);
+            localStorage.setItem("to", to);
+            window.open("pay2.html");
+          } else {
+            document.getElementById(
+              "err"
+            ).innerHTML = `Password entered is worng`;
+          }
+        });
+      }
+
+      document
+        .getElementById("loginForm")
+        .addEventListener("click", getText, true);
+    })();
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase();
+  </script>
 </html>

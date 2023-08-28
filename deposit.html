@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h4 id="err"></h4>
+      <div>
+        Enter your Acccount Number:
+        <input id="acc_from" type="number" />
+      </div>
+      Amount:
+      <input type="number" id="ammount" />
+      <div>Enter</div>
+      <div>
+        Enter the PinCode:
+        <input type="number" id="pin" />
+        <button id="pay">PAY</button>
+      </div>
+    </div>
+  </body>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
+    import {
+      getDatabase,
+      ref,
+      set,
+      onValue,
+    } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDaassIFq9p0Ypc0FDN9uKhj6fHALYygTU",
+      authDomain: "bankofbapatla.firebaseapp.com",
+      projectId: "bankofbapatla",
+      storageBucket: "bankofbapatla.appspot.com",
+      messagingSenderId: "101833800062",
+      appId: "1:101833800062:web:7d631e50c24084b8655b2f",
+      measurementId: "G-M1Z848VMYT",
+      databaseURL:
+        "https://bankofbapatla-default-rtdb.asia-southeast1.firebasedatabase.app",
+    };
+
+    (function () {
+      function getText() {
+        var acc_from = document.getElementById("acc_from").value;
+        var ammount = document.getElementById("ammount").value;
+        var pin = document.getElementById("pin").value;
+        const db = getDatabase();
+        const starCountRef = ref(db, "Accounts/" + acc_from);
+        onValue(starCountRef, (snapshot) => {
+          var data = snapshot.val();
+          var data = data.pin;
+          if (data == pin) {
+            const date = new Date();
+            const d = date.toISOString().slice(0, -5);
+            const starCountRef = ref(db, "Accounts/");
+            onValue(starCountRef, (snapshot) => {
+              const data = snapshot.val();
+              var balance_from = data.acc_from.Balance + ammount;
+            });
+            set(ref(db, "Transactions/" + `${acc_from}/` + d), {
+              D: ammount,
+            });
+            update(ref(db, "Accounts/" + `${acc_from}/`), {
+              Balance: balance_from,
+            });
+          } else {
+            document.getElementById("err").innerHTML = `Wrong Password`;
+          }
+        });
+      }
+
+      document.getElementById("pay").addEventListener("click", getText, true);
+    })();
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase();
+  </script>
+</html>
